@@ -10,6 +10,7 @@
     <script src="Build/UnityLoader.js"></script>
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/SlopePlus1.3.0Web.json", {onProgress: UnityProgress});
+      
     </script>
     <script>
       function resizeGameContainer() {
@@ -25,18 +26,6 @@
       window.addEventListener('resize', resizeGameContainer);
       window.addEventListener('DOMContentLoaded', resizeGameContainer);
     </script>
-    <style>
-      body, html {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-      .webgl-content {
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
-    </style>
   </head>
   <body>
     <div class="webgl-content">
