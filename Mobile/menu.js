@@ -2,9 +2,10 @@ let leftKey = localStorage.getItem('leftKey') || 'a';
 let rightKey = localStorage.getItem('rightKey') || 'd';
 
 function updateKeyButtons() {
-  document.getElementById('leftKeyValue').textContent = leftKey.toUpperCase();
-  document.getElementById('rightKeyValue').textContent = rightKey.toUpperCase();
+  document.getElementById('leftKeyBtn').textContent = `Left: ${leftKey.toUpperCase()}`;
+  document.getElementById('rightKeyBtn').textContent = `Right: ${rightKey.toUpperCase()}`;
 }
+
 
 function openKeybindMenu() {
   document.getElementById('keybindMenu').classList.remove('hidden');
@@ -18,11 +19,11 @@ function isMenuOpen() {
 
 let waitingFor = null;
 document.getElementById('leftKeyBtn').onclick = function() {
-  document.getElementById('leftKeyValue').textContent = '...';
+  this.textContent = 'Press key...';
   waitingFor = 'left';
 };
 document.getElementById('rightKeyBtn').onclick = function() {
-  document.getElementById('rightKeyValue').textContent = '...';
+  this.textContent = 'Press key...';
   waitingFor = 'right';
 };
 document.getElementById('closeMenuBtn').onclick = closeKeybindMenu;
@@ -56,5 +57,23 @@ updateKeyButtons();
 window.addEventListener('storage', function() {
     leftKey = localStorage.getItem('leftKey') || 'a';
     rightKey = localStorage.getItem('rightKey') || 'd';
-    updateKeyButtons();
+});
+
+window.addEventListener('keydown', function(e) {
+    // Support both custom key and 'a' for left
+    if (e.key.toLowerCase() === leftKey || e.key.toLowerCase() === 'a') {
+        simulateKeyPress(true, true);
+    }
+    // Support both custom key and 'd' for right
+    if (e.key.toLowerCase() === rightKey || e.key.toLowerCase() === 'd') {
+        simulateKeyPress(false, true);
+    }
+});
+window.addEventListener('keyup', function(e) {
+    if (e.key.toLowerCase() === leftKey || e.key.toLowerCase() === 'a') {
+        simulateKeyPress(true, false);
+    }
+    if (e.key.toLowerCase() === rightKey || e.key.toLowerCase() === 'd') {
+        simulateKeyPress(false, false);
+    }
 });
