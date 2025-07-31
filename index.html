@@ -145,8 +145,7 @@
         var isIOSStandalone = window.navigator.standalone === true;
         return isMobileUA || isIOSStandalone;
       }
-
-      window.addEventListener('DOMContentLoaded', function() {
+      function updateResizeKeyboard() {
         var kbBtn = document.getElementById('keyboard-btn');
         if (kbBtn) {
           if (isMobileDevice()) {
@@ -155,6 +154,13 @@
             kbBtn.style.display = 'none';
           }
         }
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        updateResizeKeyboard();
+      });
+      window.addEventListener('resize', function() {
+        updateResizeKeyboard();
       });
     </script>
   </body>
