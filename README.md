@@ -1,6 +1,6 @@
 # Slope Plus Web  
 
-### Play at [lonfro.github.io/SlopePlusWeb](https://lonfro.github.io/SlopePlusWeb)  
+### Play at [bbcd.me](https://bbcd.me)  
 
 #### Credits:  
 
