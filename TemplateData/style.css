@@ -67,18 +67,6 @@ html, body {
   background: #005fa3;
 }
 
-
-#keybindMenu.hidden {
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.keybind-btn:hover,
-.close-btn:hover {
-  background: #e0e0eb;
-}
-
 #keybindMenu {
   position: fixed;
   top: 50%;
@@ -100,7 +88,11 @@ html, body {
   opacity: 1;
   pointer-events: auto;
   transition: opacity 0.3s;
-  display: flex;
+}
+#keybindMenu.hidden {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 #keybindMenu h3 {
   margin: 0 0 6px 0;
@@ -111,48 +103,62 @@ html, body {
 }
 .keybind-row {
   display: flex;
-  justify-content: center;
-}
-.keybind-btn {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.keybind-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #f3f3f7;
   border: none;
   border-radius: 999px;
   padding: 10px 22px;
-  margin: 0;
   font-size: 17px;
-  font-family: inherit;
   color: #222;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   transition: background 0.18s, box-shadow 0.18s;
-  outline: none;
-  gap: 12px;
+  font-family: inherit;
+  min-width: 180px;
+  width: 100%;
+  gap: 18px;
+  position: relative;
 }
-.keybind-btn:active, .keybind-btn:focus {
+.keybind-btn:active, .keybind-btn:focus, .keybind-btn.waiting {
   background: #e0e0eb;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  outline: none;
 }
+
 .keybind-label {
   font-size: 17px;
   font-weight: 500;
-  letter-spacing: 0.2px;
+  color: #222;
+  text-align: left;
 }
-.keybind-value {
-  font-size: 15px;
+
+.keybind-value-box {
   background: #e0e0eb;
-  color: #333;
-  border-radius: 8px;
-  padding: 2px 12px;
-  margin-left: 10px;
-  font-weight: 500;
-  min-width: 28px;
-  text-align: center;
-  transition: background 0.18s;
+  border-radius: 999px;
+  padding: 4px 18px;
+  display: flex;
+  align-items: center;
+  min-width: 32px;
+  justify-content: center;
+  margin-left: auto;
 }
+
+.keybind-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
 .close-btn {
   margin-top: 8px;
   align-self: center;
@@ -170,7 +176,6 @@ html, body {
   background: #e0e0eb;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
-
 .keyboard-btn {
   position: fixed;
   top: 18px;
