@@ -28,6 +28,16 @@
 
 
     <script>
+      function closeWarning() {
+          const gameDiv = document.getElementById('gameContainer');
+          if (!gameDiv) return;
+          const button = gameDiv.querySelector('button');
+          if (button) {
+              button.click();
+              return true;
+          }
+          return false;
+      }
       function resizeGameContainer() {
         var container = document.getElementById('gameContainer');
         container.style.width = window.innerWidth + 'px';
@@ -55,6 +65,7 @@
                 clearInterval(interval); // Stop once clicked
             }
         }, 500);
+        
       });
     </script>
   </head>
