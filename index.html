@@ -130,18 +130,42 @@
     <script>
       document.getElementById('keyboard-btn').addEventListener('click', function() {
         var input = document.getElementById('keyboard-input');
+        
+        input.style.opacity = '0.01';
+        input.style.pointerEvents = 'auto';
+        input.style.position = 'fixed';
+        input.style.top = '50%';
+        input.style.left = '50%';
+      
         if (document.activeElement === input) {
-          input.blur(); 
+
+          input.blur();
+          setTimeout(function() {
+            input.style.opacity = '0';
+            input.style.pointerEvents = 'none';
+            input.style.position = 'absolute';
+            input.style.top = '';
+            input.style.left = '';
+          }, 100);
         } else {
-          input.value = ''; 
-          input.focus();    
+
+          input.value = '';
+          input.focus();
+
+          setTimeout(function() {
+            input.style.opacity = '0';
+            input.style.pointerEvents = 'none';
+            input.style.position = 'absolute';
+            input.style.top = '';
+            input.style.left = '';
+          }, 500);
         }
       });
     </script>
     <script>
       function isMobileDevice() {
-        var ua = navigator.userAgent;
-        var isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        var isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
         var isIOSStandalone = window.navigator.standalone === true;
         return isMobileUA || isIOSStandalone;
       }
