@@ -60,6 +60,17 @@ gameElement.addEventListener('touchend', (event) => {
 }, true);
 
 
+function closeWarning() {
+    const gameDiv = document.getElementById('gameContainer');
+    if (!gameDiv) return;
+    const button = gameDiv.querySelector('button');
+    if (button) {
+        button.click();
+        return true;
+    }
+    return false;
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('popup');
     popup.classList.remove('hidden');
@@ -70,6 +81,11 @@ window.addEventListener('DOMContentLoaded', () => {
       popup.classList.add('hidden');
     }, 2000);
 
+    const interval = setInterval(() => {
+        if (closeWarning()) {
+            clearInterval(interval); // Stop once clicked
+        }
+    }, 500);
 });
 
 gameElement.addEventListener('touchstart', (event) => {
