@@ -187,6 +187,7 @@ html, body {
   border-radius: 999px;
   padding: 7px 28px;
   font-size: 16px;
+  font-family: 'Inter 18pt Medium', 'Roboto', Helvetica, sans-serif;
   color: #222;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
