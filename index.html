@@ -85,10 +85,15 @@
     </script>
   </head>
   <body>
+    <button id="keyboard-btn" class="keyboard-btn" type="button" aria-label="Open keyboard">
+      <img src="home/keyboard.png" alt="" style="width: 28px; height: 28px;">
+    </button>
+    <input id="keyboard-input" class="keyboard-input" type="text" style="position:absolute;opacity:0;pointer-events:none;">
+
     <div style="position: absolute; color: #f9f9f9;">
-      <h1>Slope Plus unblocked online</h1>
-      <p>Play Slope Plus unblocked, online, with no ads at all, completely for free!</p>
-      <p>Visit our <a href="/home/" style="color:#f9f9f9;">launcher</a> to begin.</p>
+          <h1>Slope Plus unblocked online</h1>
+          <p>Play Slope Plus unblocked, online, with no ads at all, completely for free!</p>
+          <p>Visit our <a href="/home/" style="color:#f9f9f9;">launcher</a> to begin.</p>
     </div>
     <div id="keybindMenu" class="hidden">
       <h3>Keybinds</h3>
@@ -120,6 +125,30 @@
       <div id="gameContainer"></div>
     </div>
     <script src="Mobile/handler.js">     </script>
-    <script src="Mobile/menu.js">     </script>
+    <script src="Mobile/menu.js">
+         </script>
+    <script>
+      document.getElementById('keyboard-btn').addEventListener('click', function() {
+        var input = document.getElementById('keyboard-input');
+        input.value = ''; // clear previous value
+        input.focus();
+      });
+    </script>
+    <script>
+      function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        var kbBtn = document.getElementById('keyboard-btn');
+        if (kbBtn) {
+          if (isMobileDevice()) {
+            kbBtn.style.display = 'block';
+          } else {
+            kbBtn.style.display = 'none';
+          }
+        }
+      });
+    </script>
   </body>
 </html>
