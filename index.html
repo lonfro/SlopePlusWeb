@@ -130,8 +130,12 @@
     <script>
       document.getElementById('keyboard-btn').addEventListener('click', function() {
         var input = document.getElementById('keyboard-input');
-        input.value = ''; // clear previous value
-        input.focus();
+        if (document.activeElement === input) {
+          input.blur(); 
+        } else {
+          input.value = ''; 
+          input.focus();    
+        }
       });
     </script>
     <script>
