@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'Inter 18pt Regular';
+    src: url('home/Inter18pt-Regular.woff2') format('woff2'),
+        url('home/Inter18pt-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter 18pt Medium';
+    src: url('home/Inter18pt-Medium.woff2') format('woff2'),
+        url('home/Inter18pt-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 .webgl-content, #gameContainer * { 
   padding: 0;
 }
@@ -20,7 +38,9 @@ html, body {
 }
 
 #bold {
-    font-weight: bold;}
+    font-weight: bold;
+    font-family: 'Inter 18pt Medium', 'Roboto', Helvetica, sans-serif;
+  }
 #popup {
     position: fixed;
     top: 50%;
@@ -28,7 +48,7 @@ html, body {
     transform: translate(-50%, -50%);
     background-color: #fff;
     color: #000;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Inter 18pt Regular', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     font-size: 19px;
     padding: 10px 17px;
