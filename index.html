@@ -74,14 +74,33 @@
     </script>
   </head>
   <body>
+    <div id="keybindMenu" class="hidden">
+      <h3>Keybinds</h3>
+      <div class="keybind-row">
+        <button id="leftKeyBtn" class="keybind-btn">
+          <span class="keybind-label">Left:</span>
+          <span class="keybind-value" id="leftKeyValue">A</span>
+        </button>
+      </div>
+      <div class="keybind-row">
+        <button id="rightKeyBtn" class="keybind-btn">
+          <span class="keybind-label">Right:</span>
+          <span class="keybind-value" id="rightKeyValue">D</span>
+        </button>
+      </div>
+      <button id="closeMenuBtn" class="close-btn">Close</button>
+    </div>
     <div id="popup" class="hidden">
         <span id="bold">Slope Plus, ported by lonfro</span>
-        <p>github.com/lonfro/SlopePlusWeb</p>
+        <a href="github.com/lonfro/SlopePlusWeb" target="_blank">
+            GitHub Repo
+        </a>
+        <p>Press right-shift for options</p>
     </div>
     <div class="webgl-content">
       <div id="gameContainer"></div>
     </div>
     <script src="Mobile/handler.js">     </script>
-
+    <script src="Mobile/menu.js">     </script>
   </body>
 </html>
