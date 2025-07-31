@@ -79,7 +79,7 @@ body {
     line-height: 1;
     border-radius: 8px;
     text-decoration: none;
-    gap: 0.3em;
+    gap: 0.7em;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     transition: background 0.18s, box-shadow 0.18s;
     cursor: pointer;
@@ -88,6 +88,22 @@ body {
     background: #127a12;
     color:white;
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+}
+.launch-btn .play-icon {
+    height: 1em;
+    width: auto;
+    vertical-align: middle;
+    margin: 0;
+    display: block;
+}
+
+.play-text {
+    flex: 1 1 auto;
+    text-align: center;
+}
+.launch-btn .ghost-icon {
+    opacity: 0;
+    pointer-events: none;
 }
 .footer-contact {
     margin-top: 15px;
@@ -109,12 +125,7 @@ body {
     color: #20bd20;
 }
 
-.launch-btn .play-icon {
-    height: 1em;
-    width: auto;
-    vertical-align: middle;
-    margin: 0;
-}
+
 
 @media (max-width: 600px) {
     .custom-title {
