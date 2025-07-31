@@ -79,7 +79,7 @@ body {
     line-height: 1;
     border-radius: 8px;
     text-decoration: none;
-    gap: 0.7em;
+    gap: 0.5em;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     transition: background 0.18s, box-shadow 0.18s;
     cursor: pointer;
