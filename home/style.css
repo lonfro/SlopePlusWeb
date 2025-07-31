@@ -1,15 +1,27 @@
+
+@font-face {
+    font-family: 'Inter 18pt Regular';
+    src: url('Inter18pt-Regular.woff2') format('woff2'),
+        url('Inter18pt-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter 18pt Medium';
+    src: url('Inter18pt-Medium.woff2') format('woff2'),
+        url('Inter18pt-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
 body, .launchpad, .custom-title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-smooth: always;
-}
-@font-face {
-    font-family: 'Inter 18p Regular';
-    src: url(regular.ttf);
-}
-@font-face {
-    font-family: 'Inter 18p Medium';
-    src: url(medium.ttf);
 }
 html, body {
     overflow: hidden;
@@ -25,10 +37,10 @@ body {
     justify-content: center;
     background: url('wallpaper.png') no-repeat center center fixed;
     background-size: cover;
-    font-family: 'Inter 18p Regular', 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter 18pt Regular', 'Roboto', Helvetica, sans-serif;
 }
 .custom-title {
-    font-family: 'Inter 18p Medium', 'Roboto', Helvetica, sans-serif;
+    font-family: 'Inter 18pt Medium', 'Roboto', Helvetica, sans-serif;
     font-size: 1.75rem;
     font-weight: 600;
     margin: 0.5em 0;
