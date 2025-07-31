@@ -9,9 +9,24 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
+      document.addEventListener('gesturestart', function(e) {
+          e.preventDefault();
+      });
+      
+      document.addEventListener('gesturechange', function(e) {
+          e.preventDefault();
+      });
+      
+      document.addEventListener('gestureend', function(e) {
+          e.preventDefault();
+      });
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/SlopePlus1.3.0Web.json", {onProgress: UnityProgress});
       
     </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <script>
       function resizeGameContainer() {
         var container = document.getElementById('gameContainer');
@@ -24,12 +39,32 @@
         }
       }
       window.addEventListener('resize', resizeGameContainer);
-      window.addEventListener('DOMContentLoaded', resizeGameContainer);
+      window.addEventListener('DOMContentLoaded', () => {
+        resizeGameContainer();
+        const popup = document.getElementById('popup');
+        popup.classList.remove('hidden');
+
+        void popup.offsetWidth;
+
+        setTimeout(() => {
+          popup.classList.add('hidden');
+        }, 2000);
+
+        const interval = setInterval(() => {
+            if (closeWarning()) {
+                clearInterval(interval); // Stop once clicked
+            }
+        }, 500);
+      });
     </script>
   </head>
   <body>
+    <div id="popup" class="hidden">
+        <span id="bold">Slope Plus, ported by lonfro</span>
+        <p>github.com/lonfro/SlopePlusWeb</p>
+    </div>
     <div class="webgl-content">
-      <div id="gameContainer" style="width: 100vw; height: 100vh"></div>
+      <div id="gameContainer"></div>
     </div>
   </body>
 </html>
