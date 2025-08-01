@@ -220,7 +220,7 @@ body {
 }
 
 .changelog.expanded {
-    max-height: calc(12em) !important;
+    max-height: calc(8em) !important;
     opacity: 1;
     background: #ffffff50;
     padding: 8px 8px;
