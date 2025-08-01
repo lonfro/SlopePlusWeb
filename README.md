@@ -1,6 +1,6 @@
 # Slope Plus Web  
 
-### Play at [bbcd.me](https://bbcd.me)  
+## Play at [bbcd.me](https://bbcd.me)  
 
 ### Features  
 
