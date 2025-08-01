@@ -81,10 +81,25 @@ window.addEventListener('keydown', function(e) {
     if (e.key.toLowerCase() === rightKey || e.key.toLowerCase() === 'd') {
         simulateKeyPress(false, true);
     }
-    if ((e.key.toLowerCase() === hideKey || e.key === '`') && !waitHideKeyPressed) {
+    if ((e.key.toLowerCase() === hideKey) && !waitHideKeyPressed) {
         waitHideKeyPressed = true;
-        document.querySelector('.hider').style.display === 'none' ? document.querySelector('.hider').style.display = 'block' : document.querySelector('.hider').style.display = 'none'; // Hide the 404 page
+        const hider = document.querySelector('.hider');
+        const isHiding = hider.style.display === 'none';
+
+        if (isHiding) {
+            hider.style.display = 'block';
+            document.title = '';
+            document.querySelector('link[rel="icon"]').href = 'data:,';
+            document.querySelector('link[rel="shortcut icon"]').href = 'data:,';
+        } else {
+            
+            hider.style.display = 'none';
+            document.title = 'Slope Plus';
+            document.querySelector('link[rel="icon"]').href = 'home/icon.png';
+            document.querySelector('link[rel="shortcut icon"]').href = 'TemplateData/favicon.ico';
+        }
     }
+    
 });
 window.addEventListener('keyup', function(e) {
     waitHideKeyPressed = false;
