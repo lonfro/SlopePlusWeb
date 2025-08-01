@@ -1,9 +1,13 @@
 let leftKey = localStorage.getItem('leftKey') || 'a';
 let rightKey = localStorage.getItem('rightKey') || 'd';
+let hideKey = localStorage.getItem('hideKey') || '\\'; 
+
+let waitHideKeyPressed = false;
 
 function updateKeyButtons() {
   document.getElementById('leftKeyBtn').textContent = `Left: ${leftKey.toUpperCase()}`;
   document.getElementById('rightKeyBtn').textContent = `Right: ${rightKey.toUpperCase()}`;
+  document.getElementById('hideKeyBtn').textContent = `Hide keybind: ${hideKey.toUpperCase()}`;
 }
 
 
@@ -26,6 +30,10 @@ document.getElementById('rightKeyBtn').onclick = function() {
   this.textContent = 'Press key...';
   waitingFor = 'right';
 };
+document.getElementById('hideKeyBtn').onclick = function() {
+  this.textContent = 'Press key...';
+  waitingFor = 'hide';
+};
 document.getElementById('closeMenuBtn').onclick = closeKeybindMenu;
 
 window.addEventListener('keydown', function(e) {
@@ -36,6 +44,9 @@ window.addEventListener('keydown', function(e) {
     } else if (waitingFor === 'right') {
       rightKey = e.key.length === 1 ? e.key.toLowerCase() : e.key;
       localStorage.setItem('rightKey', rightKey);
+    } else if (waitingFor === 'hide') {
+      hideKey = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      localStorage.setItem('hideKey', hideKey);
     }
     waitingFor = null;
     updateKeyButtons();
@@ -57,6 +68,7 @@ updateKeyButtons();
 window.addEventListener('storage', function() {
     leftKey = localStorage.getItem('leftKey') || 'a';
     rightKey = localStorage.getItem('rightKey') || 'd';
+    hideKey = localStorage.getItem('hideKey') || '`';
 });
 
 window.addEventListener('keydown', function(e) {
@@ -68,8 +80,13 @@ window.addEventListener('keydown', function(e) {
     if (e.key.toLowerCase() === rightKey || e.key.toLowerCase() === 'd') {
         simulateKeyPress(false, true);
     }
+    if ((e.key.toLowerCase() === hideKey || e.key === '`') && !waitHideKeyPressed) {
+        waitHideKeyPressed = true;
+        document.querySelector('.hider').style.display === 'none' ? document.querySelector('.hider').style.display = 'block' : document.querySelector('.hider').style.display = 'none'; // Hide the 404 page
+    }
 });
 window.addEventListener('keyup', function(e) {
+    waitHideKeyPressed = false;
     if (e.key.toLowerCase() === leftKey || e.key.toLowerCase() === 'a') {
         simulateKeyPress(true, false);
     }
