@@ -16,8 +16,8 @@ fetch('https://api.github.com/repos/lonfro/SlopePlusWeb/commits?per_page=15')
     ).join('');
   });
 
+
 toggleBtn.addEventListener('click', function() {
-  const isOpen = changelogBox.style.display === 'block';
-  changelogBox.style.display = isOpen ? 'none' : 'block';
-  toggleBtn.innerHTML = isOpen ? '&#x25BC;' : '&#x25B2;';
+  changelogBox.classList.toggle('expanded');
+  toggleBtn.innerHTML = changelogBox.classList.contains('expanded') ? '&#x25B2;' : '&#x25BC;';
 });
