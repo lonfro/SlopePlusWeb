@@ -48,11 +48,11 @@ body {
     font-weight: 600;
     margin: 0.5em 0;
     text-align: center;
-    color:#20bd20
+    color:#34ca34
     
 }
 .launchpad {
-    background: #fff;
+    background: #fffffff3;
     padding: 22px 20px 15px 20px;
     border-radius: 25px;
     box-shadow: 0 4px 24px rgba(255, 255, 255, 0.728);
@@ -200,7 +200,7 @@ body {
     max-height: calc(12em) !important;
 }
 
-.changelog p {
+.launchpad, .changelog p {
     margin: 0 0 6px 0;
     font-size: 1rem !important;
     letter-spacing: 0.1px;    
