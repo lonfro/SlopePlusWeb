@@ -9,7 +9,8 @@
 - No ads  
 
 ### Blocked/Want to make your own website?  
-Fork this project, go to Repository settings, then to to Pages and turn it on. As long as you don't remove index.html, it will work fine.
+  
+- Fork this project, go to Repository settings, then go to Pages and turn it on. As long as you don't remove index.html, it will work fine.
 
 #### Credits:  
 
