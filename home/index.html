@@ -34,6 +34,35 @@
         <a href="https://github.com/lonfro" target="_blank">lonfro</a>
       </span>
     </div>
+    <div class="changelog-line">
+      <span class="changelog-text">
+        Changelog:
+        <span class="changelog-btn" id="toggleButton">
+          &#x25BC;
+        </span>
+      </span>
+    </div>
+    <div class="changelog" id="changelogBlock" style="display: none;">
+        <p>- Initial release</p>
+        <p>- Added new features</p>
+        <p>- Bug fixes</p>
+        <p>- Initial release</p>
+        <p>- Added new features</p>
+        <p>- Bug fixes</p>
+        <p>- Initial release</p>
+        <p>- Added new features</p>
+        <p>- Bug fixes</p>
+    
+    </div>
   </div>
+  <script>
+    const toggleBtn = document.getElementById('toggleButton');
+    const changelogBox = document.getElementById('changelogBlock');
+    toggleBtn.addEventListener('click', function() {
+      const bloodyButtonOpen = changelogBox.style.display === 'block';
+      changelogBox.style.display = bloodyButtonOpen ? 'none' : 'block';
+      toggleBtn.innerHTML = bloodyButtonOpen ? '&#x25BC;' : '&#x25B2;';
+    });
+  </script>
   </body>
 </html>
