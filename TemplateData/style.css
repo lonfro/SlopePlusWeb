@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'Inter 18pt Medium';
-    src: url('home/Inter18pt-Medium.woff2') format('woff2'),
-        url('home/Inter18pt-Medium.woff') format('woff');
+    src: url('../home/Inter18pt-Medium.woff2') format('woff2'),
+        url('../home/Inter18pt-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
