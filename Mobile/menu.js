@@ -34,6 +34,7 @@ document.getElementById('hideKeyBtn').onclick = function() {
   this.textContent = 'Press key...';
   waitingFor = 'hide';
 };
+
 document.getElementById('closeMenuBtn').onclick = closeKeybindMenu;
 
 window.addEventListener('keydown', function(e) {
