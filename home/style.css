@@ -43,6 +43,7 @@ body {
     font-family: 'Inter 18pt Regular', 'Roboto', Helvetica, sans-serif;
 }
 .custom-title {
+    letter-spacing: 0.7px;
     font-family: 'Inter 18pt Medium', 'Roboto', Helvetica, sans-serif;
     font-size: 1.75rem;
     font-weight: 600;
