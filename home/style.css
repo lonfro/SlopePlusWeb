@@ -152,13 +152,13 @@ body {
 .changelog-btn {
     display: inline-flex;
     background: #fff;
-    border-color: #222;
+    border-color: #888;
     border-width: 1px;
     border-style: solid;
     
 
-    color: #222;
-    font-size: 0.7rem;
+    color: #888;
+    font-size: 0.65rem;
     font-weight: 500;
     padding: 5px 5px;
     margin-top:0.3em;
@@ -170,6 +170,7 @@ body {
     transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
     cursor: pointer;
 }
+
 .changelog-btn:hover, .changelog-btn:focus {
     background: #c8c8c8;
     color:white;
