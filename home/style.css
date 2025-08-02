@@ -98,11 +98,36 @@ body {
     transform: scale(1.1);
     box-shadow: 0 4px 16px rgba(0,0,0,0.13);
 }
+
 .launch-btn:active {
     background: #1aa91a;
     color:white;
     transform: scale(1.05);
 }
+
+
+/* Add to your style.css */
+.launch-btn.transitioning {
+  background: #000 !important;
+  color: #000 !important;
+  transform: scale(50) !important;
+  transition: 
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  z-index: 9999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+}
+
+.launch-btn.transitioning .play-icon,
+.launch-btn.transitioning .play-text {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
 
 .launch-btn .play-icon {
     height: 1em;

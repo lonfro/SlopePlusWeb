@@ -37,6 +37,11 @@ html, body {
   overflow: hidden;
 }
 
+body {
+  background-color: #000 !important;
+
+}
+
 #bold {
     font-weight: bold;
     font-family: 'Inter 18pt Medium', 'Roboto', Helvetica, sans-serif;

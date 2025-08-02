@@ -52,5 +52,29 @@
     </div>
   </div>
   <script src="githubpushes.js"></script>
+    <script>
+      document.querySelector('.launch-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        this.blur();
+        
+        const rect = this.getBoundingClientRect();
+        
+        this.style.position = 'fixed';
+        this.style.top = rect.top + 'px';
+        this.style.left = rect.left + 'px';
+        this.style.width = rect.width + 'px';
+        this.style.height = rect.height + 'px';
+
+        this.classList.add('transitioning');
+
+        setTimeout(() => {
+          window.location.href = this.href;
+        }, 200);
+
+      });
+      </script>
   </body>
 </html>
