@@ -44,6 +44,7 @@ body {
 
 #bold {
     font-weight: bold;
+    letter-spacing: 0.5px;
     font-family: 'Inter 18pt Medium', 'Roboto', Helvetica, sans-serif;
   }
 #popup {
