@@ -97,32 +97,44 @@
           <p>Visit our <a href="/home/" style="color:#f9f9f9;">launcher</a> to begin.</p>
     </div>
     <div id="keybindMenu" class="hidden">
-      <h3>Keybinds</h3>
+      <h3>Settings</h3>
       <div class="keybind-row">
         <button id="leftKeyBtn" class="keybind-btn">
-          <span class="keybind-label">Left:</span>
-          <span class="keybind-value-box">
+          <span class="keybind-label" id="leftKeyValueLabel">Left:</span>
+          <span class="keybind-value-box" id="leftKeyValueBox">
             <span class="keybind-value" id="leftKeyValue">A</span>
           </span>
         </button>
       </div>
       <div class="keybind-row">
         <button id="rightKeyBtn" class="keybind-btn">
-          <span class="keybind-label">Right:</span>
-          <span class="keybind-value-box">
+          <span class="keybind-label" id="rightKeyValueLabel">Right:</span>
+          <span class="keybind-value-box" id="rightKeyValueBox">
             <span class="keybind-value" id="rightKeyValue">D</span>
           </span>
         </button>
       </div>
       <div class="keybind-row">
         <button id="hideKeyBtn" class="keybind-btn">
-          <span class="keybind-label">Hide game:</span>
-          <span class="keybind-value-box">
+          <span class="keybind-label" id="hideKeyValueLabel">Hide game:</span>
+          <span class="keybind-value-box" id="hideKeyValueBox">
             <span class="keybind-value" id="hideKeyValue">\</span>
           </span>
         </button>
       </div>
-      <button id="closeMenuBtn" class="close-btn">Close</button>
+
+      <div class="keybind-row">
+        <button id="keybindMenuKeyBtn" class="keybind-btn">
+          <span class="keybind-label" id="keybindMenuKeyValueLabel">Settings:</span>
+          <span class="keybind-value-box" id="keybindMenuKeyValueBox">
+            <span class="keybind-value" id="keybindMenuKeyValue">ShiftRight</span>
+          </span>
+        </button>
+      </div>
+
+      <button id="closeMenuBtn" class="close-btn">
+        Close
+      </button>
     </div>
     <div id="popup" class="hidden">
         <span id="bold">Slope Plus, ported by lonfro</span>
