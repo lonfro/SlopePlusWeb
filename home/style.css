@@ -65,9 +65,7 @@ body {
     transition: transform 0.18s;
 }
 
-.launchpad:hover {
-    transform: scale(1.007);
-}
+
 
 .launchpad h1 {
     margin-top: 0;
