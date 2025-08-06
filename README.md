@@ -5,8 +5,12 @@
 ### Features  
 
 - Saves progress to local storage automatically
-- Mobile support integrated
 - No ads  
+- Settings (right-shift by default):  
+  - Custom keybinds  
+  - Optional freeze game if unfocused  
+  - Mobile support integrated  
+
 
 ### Blocked/Want to make your own website?  
   
