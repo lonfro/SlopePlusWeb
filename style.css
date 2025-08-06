@@ -190,6 +190,51 @@ body {
   letter-spacing: 1px;
 }
 
+/* Toggle slider styles */
+.toggle-box {
+  background: #e5e5ea;
+  border-radius: 999px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  min-width: 50px;
+  width: 50px;
+  height: 28px;
+  justify-content: flex-start;
+  margin-left: auto;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toggle-slider {
+  background: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0; /* Hide text */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Active state - slider moves right and changes color */
+.toggle-box.active {
+  background: #34c759; /* iOS green */
+}
+
+.toggle-box.active .toggle-slider {
+  transform: translateX(22px); /* Move slider to right */
+}
+
+/* Hover effects */
+.keybind-btn:hover .toggle-box {
+  opacity: 0.8;
+}
+
+
 .close-btn {
   margin-top: 6px;
   align-self: center;

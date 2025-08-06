@@ -131,6 +131,15 @@
         </button>
       </div>
 
+      <div class="keybind-row">
+        <button id="freezeGameBtn" class="keybind-btn">
+          <span class="keybind-label" id="freezeGameValueLabel">Pause on unfocus:</span>
+          <span class="toggle-box" id="freezeGameValueBox">
+            <span class="toggle-slider" id="freezeGameValue">O</span>
+          </span>
+        </button>
+      </div>
+
       <button id="closeMenuBtn" class="close-btn">
         Close
       </button>
@@ -148,73 +157,20 @@
     <div class="webgl-content">
       <div id="gameContainer"></div>
     </div>
-    <script src="Mobile/handler.js">     </script>
-    <script src="Mobile/menu.js">
-         </script>
-    <script>
-      document.getElementById('keyboard-btn').addEventListener('click', function() {
-        var input = document.getElementById('keyboard-input');
-        
-        input.style.opacity = '0.01';
-        input.style.pointerEvents = 'auto';
-        input.style.position = 'fixed';
-        input.style.top = '50%';
-        input.style.left = '50%';
-      
-        if (document.activeElement === input) {
 
-          input.blur();
-          setTimeout(function() {
-            input.style.opacity = '0';
-            input.style.pointerEvents = 'none';
-            input.style.position = 'absolute';
-            input.style.top = '';
-            input.style.left = '';
-          }, 100);
-        } else {
-
-          input.value = '';
-          input.focus();
-
-          setTimeout(function() {
-            input.style.opacity = '0';
-            input.style.pointerEvents = 'none';
-            input.style.position = 'absolute';
-            input.style.top = '';
-            input.style.left = '';
-          }, 500);
-        }
-      });
-    </script>
-    <script>
-      function isMobileDevice() {
-        var ua = navigator.userAgent || navigator.vendor || window.opera;
-        var isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
-        var isIOSStandalone = window.navigator.standalone === true;
-        return isMobileUA || isIOSStandalone;
-      }
-      function updateResizeKeyboard() {
-        var kbBtn = document.getElementById('keyboard-btn');
-        if (kbBtn) {
-          if (isMobileDevice()) {
-            kbBtn.style.display = 'block';
-          } else {
-            kbBtn.style.display = 'none';
-          }
-        }
-      }
-
-      window.addEventListener('DOMContentLoaded', function() {
-        updateResizeKeyboard();
-      });
-      window.addEventListener('resize', function() {
-        updateResizeKeyboard();
-      });
-    </script>
     <div class="hider" style="display: none; background-color: white; height:100vh; width:100vw; position: fixed; top: 0; left: 0; z-index: 9999;">
       <h1 style="margin-left: 10px; font-size: 25px; font-family:Arial, Helvetica, sans-serif; font-weight:bold;">
         404 not found
       </h1>
     </div>
+
+    
+
+    <script src="Patches/mobile.js">     </script>
+    <script src="Patches/settings.js">     </script>
+    <script src="Patches/freezegame.js">     </script> // btw freezegame relies on variables in settings
+    
+    <script></script>
+    
   </body>
 </html>

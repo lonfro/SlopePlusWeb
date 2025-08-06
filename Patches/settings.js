@@ -2,7 +2,7 @@ let leftKey = localStorage.getItem('leftKey') || 'a';
 let rightKey = localStorage.getItem('rightKey') || 'd';
 let hideKey = localStorage.getItem('hideKey') || '\\'; 
 let keybindMenuKey = localStorage.getItem('keybindMenuKey') || 'ShiftRight';
-
+window.freezeEnabled = localStorage.getItem('freezeEnabled') || "off";
 let waitHideKeyPressed = false;
 
 function updateKeyButtons() {
@@ -18,9 +18,20 @@ function updateKeyButtons() {
   document.getElementById('hideKeyBtn').blur();
   document.getElementById('hideKeyValueBox').textContent = `${hideKey.toUpperCase()}`;
 
+  
+
   document.getElementById('keybindMenuKeyValueLabel').textContent = "Settings:";
   document.getElementById('keybindMenuKeyBtn').blur();
   document.getElementById('keybindMenuKeyValue').textContent = `${keybindMenuKey.toUpperCase()}`;
+  const toggleBox = document.getElementById('freezeGameValueBox');
+  if (toggleBox) {
+    if (window.freezeEnabled === "on") {
+      toggleBox.classList.add('active');
+    } else {
+      toggleBox.classList.remove('active');
+    }
+  }
+  document.getElementById('freezeGameBtn').blur();  
 }
 
 function hideGame() {
@@ -80,6 +91,24 @@ document.getElementById('keybindMenuKeyBtn').onclick = function() {
   waitingFor = 'keybind';
 };
 
+document.getElementById('freezeGameBtn').onclick = function() {
+  const toggleBox = document.getElementById('freezeGameValueBox');
+  if (toggleBox) {
+      if (toggleBox.classList.contains('active')) {
+          toggleBox.classList.remove('active');
+          freezeEnabled = "off";
+          localStorage.setItem('freezeEnabled', freezeEnabled);
+
+      } else {
+          toggleBox.classList.add('active');
+          freezeEnabled = "on";
+          localStorage.setItem('freezeEnabled', freezeEnabled);
+      }
+  }
+  updateKeyButtons();
+};
+
+
 document.getElementById('closeMenuBtn').onclick = closeKeybindMenu;
 
 window.addEventListener('keydown', function(e) {
@@ -136,6 +165,7 @@ window.addEventListener('storage', function() {
     leftKey = localStorage.getItem('leftKey') || 'a';
     rightKey = localStorage.getItem('rightKey') || 'd';
     hideKey = localStorage.getItem('hideKey') || '`';
+    window.freezeEnabled = localStorage.getItem('freezeEnabled') || 'off';
 });
 
 
