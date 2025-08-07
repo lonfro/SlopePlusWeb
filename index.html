@@ -158,7 +158,17 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const dynamicOptions = document.getElementById("dynamicOptions");
-        let optionKey = (localStorage.getItem('keybindMenuKey') == 'ShiftRight' ? "right-shift" : localStorage.getItem('keybindMenuKey').replace('Key', ''));
+        let keybindMenuKey = localStorage.getItem('keybindMenuKey') || 'ShiftRight';
+        
+        let optionKey;
+        if (keybindMenuKey == 'ShiftRight') {
+          optionKey = "right-shift";
+        } else if (keybindMenuKey && keybindMenuKey.startsWith('Key')) {
+          optionKey = keybindMenuKey.replace('Key', '').toUpperCase();
+        } else {
+          optionKey = keybindMenuKey ? keybindMenuKey : "right-shift";
+        }
+        
         dynamicOptions.innerHTML = `
           <p>Press ${optionKey} for options</p>
         `;
