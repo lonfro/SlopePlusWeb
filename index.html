@@ -144,6 +144,7 @@
         Close
       </button>
     </div>
+    </script>
     <div id="popup" class="hidden">
         <span id="bold">Slope Plus, ported by lonfro</span>
         <a href="https://github.com/lonfro/SlopePlusWeb" target="_blank">
@@ -152,8 +153,17 @@
         <a href="https://lonfro.github.io/slopemobile">
             Old Slope Mobile
         </a>
-        <p>Press right-shift for options</p>
+        <p id="dynamicOptions"></p>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const dynamicOptions = document.getElementById("dynamicOptions");
+        let optionKey = (localStorage.getItem('keybindMenuKey') == 'ShiftRight' ? "right-shift" : localStorage.getItem('keybindMenuKey').replace('Key', ''));
+        dynamicOptions.innerHTML = `
+          <p>Press ${optionKey} for options</p>
+        `;
+      });
+    </script>
     <div class="webgl-content">
       <div id="gameContainer"></div>
     </div>

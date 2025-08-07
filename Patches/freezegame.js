@@ -25,6 +25,9 @@ window.addEventListener('load', () => {
                 console.log('unpause');
             }
 
+            window.freezeUnity = freeze;
+            window.unfreezeUnity = unfreeze;
+
 
             window.addEventListener('blur', () => {
                 if (window.freezeEnabled === "on") {

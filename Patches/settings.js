@@ -40,12 +40,13 @@ function hideGame() {
   const isHiding = hider.style.display === 'none';
 
   if (isHiding) {
+      window.freezeUnity();
       hider.style.display = 'block';
       document.title = '';
       document.querySelector('link[rel="icon"]').href = 'data:,';
       document.querySelector('link[rel="shortcut icon"]').href = 'data:,';
   } else {
-      
+      window.unfreezeUnity();
       hider.style.display = 'none';
       document.title = 'Slope Plus';
       document.querySelector('link[rel="icon"]').href = 'home/icon.png';
