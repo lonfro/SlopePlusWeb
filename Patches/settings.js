@@ -112,6 +112,14 @@ document.getElementById('freezeGameBtn').onclick = function() {
 };
 
 
+document.getElementById('exportDataBtn').onclick = function() {
+  exportData();
+};
+
+document.getElementById('importDataBtn').onclick = function() {
+  importData();
+};
+
 document.getElementById('closeMenuBtn').onclick = closeKeybindMenu;
 
 window.addEventListener('keydown', function(e) {
