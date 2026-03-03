@@ -6,20 +6,20 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://bbcd.me/</loc>
+  <loc>https://lonfro.github.io/SlopePlusWeb/</loc>
   <lastmod>2025-10-31T00:00:00+00:00</lastmod>
   <priority>0.5</priority>
 </url>
 <url>
-  <loc>https://bbcd.me/home/</loc>
+  <loc>https://lonfro.github.io/SlopePlusWeb/home/</loc>
   <lastmod>2025-10-31T00:00:00+00:00</lastmod>
   <!-- Language alternates -->
-  <xhtml:link rel="alternate" hreflang="en" href="https://bbcd.me/home/?lang=en"/>
-  <xhtml:link rel="alternate" hreflang="zh-CN" href="https://bbcd.me/home/?lang=zh-CN"/>
-  <xhtml:link rel="alternate" hreflang="ja" href="https://bbcd.me/home/?lang=ja"/>
-  <xhtml:link rel="alternate" hreflang="de" href="https://bbcd.me/home/?lang=de"/>
-  <xhtml:link rel="alternate" hreflang="es" href="https://bbcd.me/home/?lang=es"/>
-  <xhtml:link rel="alternate" hreflang="x-default" href="https://bbcd.me/home/"/>
+  <xhtml:link rel="alternate" hreflang="en" href="https://lonfro.github.io/SlopePlusWeb/home/?lang=en"/>
+  <xhtml:link rel="alternate" hreflang="zh-CN" href="https://lonfro.github.io/SlopePlusWeb/home/?lang=zh-CN"/>
+  <xhtml:link rel="alternate" hreflang="ja" href="https://lonfro.github.io/SlopePlusWeb/home/?lang=ja"/>
+  <xhtml:link rel="alternate" hreflang="de" href="https://lonfro.github.io/SlopePlusWeb/home/?lang=de"/>
+  <xhtml:link rel="alternate" hreflang="es" href="https://lonfro.github.io/SlopePlusWeb/home/?lang=es"/>
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://lonfro.github.io/SlopePlusWeb/home/"/>
   <priority>1</priority>
 </url>
 </urlset>
