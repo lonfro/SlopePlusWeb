@@ -1,6 +1,6 @@
 # Slope Plus Web  
 
-## Play at [bbcd.me](https://bbcd.me)  
+## Play at [lonfro.github.io/SlopePlusWeb](https://lonfro.github.io/SlopePlusWeb/)  
 
 ### Features  
 
@@ -16,7 +16,7 @@
 
 ### Blocked/Want to make your own website?  
   
-- Fork this project, go to Repository settings, then go to Pages and turn it on. As long as you don't remove index.html, it will work fine.  
+- Fork this project, go to Repository settings, go to Pages, then select the main branch under the Branch header, then press Save. As long as you don't remove index.html, it will work fine.  
 
 #### Credits:  
 
