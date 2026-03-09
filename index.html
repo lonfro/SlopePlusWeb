@@ -149,14 +149,24 @@
     <div id="keybindMenu" class="hidden">
       <h3 data-i18n="root.settings.title">Settings</h3>
       <div class="keybind-row">
+        <div class="keybind-btn lang-switcher-row" style="cursor:default;">
+          <span class="keybind-label" data-i18n="root.settings.language">Language:</span>
+          <div class="lang-switcher-btns">
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="zh-CN">中文</button>
+            <button class="lang-btn" data-lang="ja">日本語</button>
+            <button class="lang-btn" data-lang="de">DE</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+          </div>
+        </div>
+      </div>
+      <div class="keybind-row keybind-row-pair">
         <button id="leftKeyBtn" class="keybind-btn">
           <span class="keybind-label" id="leftKeyValueLabel" data-i18n="root.settings.left">Left:</span>
           <span class="keybind-value-box" id="leftKeyValueBox">
             <span class="keybind-value" id="leftKeyValue">A</span>
           </span>
         </button>
-      </div>
-      <div class="keybind-row">
         <button id="rightKeyBtn" class="keybind-btn">
           <span class="keybind-label" id="rightKeyValueLabel" data-i18n="root.settings.right">Right:</span>
           <span class="keybind-value-box" id="rightKeyValueBox">

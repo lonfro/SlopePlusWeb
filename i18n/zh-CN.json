@@ -16,7 +16,17 @@
       "hide": "隐藏游戏：",
       "menuKey": "设置：",
       "pause": "失焦时暂停：",
+      "language": "语言:",
+      "export": "导出数据",
+      "import": "导入数据",
+      "pressKey": "按下按键",
       "close": "关闭"
+    },
+    "messages": {
+      "dataImportSuccess": "数据导入成功。页面即将重新加载。",
+      "dataImportFailed": "导入数据失败",
+      "invalidDataFile": "无效的数据文件。",
+      "exportFailed": "导出失败"
     },
     "popup": {
       "ported": "Slope Plus，由 lonfro 移植",

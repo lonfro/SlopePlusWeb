@@ -183,7 +183,8 @@ async function exportData() {
     _downloadJSON(payload, 'slopeplus-data.json');
   } catch (err) {
     console.error('[import.js] export failed:', err);
-    alert('Export failed: ' + err.message);
+    const message = window.t ? window.t('root.messages.exportFailed') : 'Export failed';
+    alert(message + ': ' + err.message);
   }
 }
 
@@ -201,7 +202,7 @@ async function importData() {
       var data = JSON.parse(text);
 
       if (typeof data !== 'object' || data === null || Array.isArray(data)) {
-        alert('Invalid data file.');
+        alert(window.t ? window.t('root.messages.invalidDataFile') : 'Invalid data file.');
         return;
       }
 
@@ -227,11 +228,12 @@ async function importData() {
         console.log('[import.js] restored', idb.records.length, 'IndexedDB records (ver ' + ver + ')');
       }
 
-      alert('Data imported successfully. The page will now reload.');
+      alert(window.t ? window.t('root.messages.dataImportSuccess') : 'Data imported successfully. The page will now reload.');
       location.reload();
     } catch (err) {
       console.error('[import.js] import failed:', err);
-      alert('Failed to import data: ' + err.message);
+      const message = window.t ? window.t('root.messages.dataImportFailed') : 'Failed to import data';
+      alert(message + ': ' + err.message);
     }
   });
 

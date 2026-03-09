@@ -6,21 +6,21 @@ window.freezeEnabled = localStorage.getItem('freezeEnabled') || "off";
 let waitHideKeyPressed = false;
 
 function updateKeyButtons() {
-  document.getElementById('leftKeyValueLabel').textContent = "Left:";
+  document.getElementById('leftKeyValueLabel').textContent = window.t ? window.t('root.settings.left') : "Left:";
   document.getElementById('leftKeyBtn').blur();
   document.getElementById('leftKeyValueBox').textContent = `${leftKey.toUpperCase()}`;
 
-  document.getElementById('rightKeyValueLabel').textContent = "Right:";
+  document.getElementById('rightKeyValueLabel').textContent = window.t ? window.t('root.settings.right') : "Right:";
   document.getElementById('rightKeyBtn').blur();
   document.getElementById('rightKeyValueBox').textContent = `${rightKey.toUpperCase()}`;
 
-  document.getElementById('hideKeyValueLabel').textContent = "Hide game:";
+  document.getElementById('hideKeyValueLabel').textContent = window.t ? window.t('root.settings.hide') : "Hide game:";
   document.getElementById('hideKeyBtn').blur();
   document.getElementById('hideKeyValueBox').textContent = `${hideKey.toUpperCase()}`;
 
   
 
-  document.getElementById('keybindMenuKeyValueLabel').textContent = "Settings:";
+  document.getElementById('keybindMenuKeyValueLabel').textContent = window.t ? window.t('root.settings.menuKey') : "Settings:";
   document.getElementById('keybindMenuKeyBtn').blur();
   document.getElementById('keybindMenuKeyValue').textContent = `${keybindMenuKey.toUpperCase()}`;
   const toggleBox = document.getElementById('freezeGameValueBox');
@@ -59,6 +59,7 @@ function hideGame() {
 
 function openKeybindMenu() {
   document.getElementById('keybindMenu').classList.remove('hidden');
+  updateActiveLangBtn();
 }
 function closeKeybindMenu() {
   document.getElementById('closeMenuBtn').blur();
@@ -71,25 +72,25 @@ function isMenuOpen() {
 
 let waitingFor = null;
 document.getElementById('leftKeyBtn').onclick = function() {
-  document.getElementById('leftKeyValueLabel').textContent = 'Press key';
+  document.getElementById('leftKeyValueLabel').textContent = window.t ? window.t('root.settings.pressKey') : 'Press key';
   document.getElementById('leftKeyValueBox').textContent = '...';
   waitingFor = 'left';
 };
 
 document.getElementById('rightKeyBtn').onclick = function() {
-  document.getElementById('rightKeyValueLabel').textContent = 'Press key';
+  document.getElementById('rightKeyValueLabel').textContent = window.t ? window.t('root.settings.pressKey') : 'Press key';
   document.getElementById('rightKeyValueBox').textContent = '...';
   waitingFor = 'right';
 };
 
 document.getElementById('hideKeyBtn').onclick = function() {
-  document.getElementById('hideKeyValueLabel').textContent = 'Press key';
+  document.getElementById('hideKeyValueLabel').textContent = window.t ? window.t('root.settings.pressKey') : 'Press key';
   document.getElementById('hideKeyValueBox').textContent = '...';
   waitingFor = 'hide';
 };
 
 document.getElementById('keybindMenuKeyBtn').onclick = function() {
-  document.getElementById('keybindMenuKeyValueLabel').textContent = 'Press key';
+  document.getElementById('keybindMenuKeyValueLabel').textContent = window.t ? window.t('root.settings.pressKey') : 'Press key';
   document.getElementById('keybindMenuKeyValue').textContent = '...';
   waitingFor = 'keybind';
 };
@@ -121,6 +122,37 @@ document.getElementById('importDataBtn').onclick = function() {
 };
 
 document.getElementById('closeMenuBtn').onclick = closeKeybindMenu;
+
+// Language switcher in settings menu
+const LANG_SUPPORTED = ['en', 'zh-CN', 'ja', 'de', 'es'];
+
+function updateActiveLangBtn() {
+  const current = localStorage.getItem('lang') || 'en';
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.lang === current);
+  });
+}
+
+(function() {
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const lang = btn.dataset.lang;
+      if (!LANG_SUPPORTED.includes(lang)) return;
+      if (typeof window.setLang === 'function') {
+        window.setLang(lang).then(function() {
+          updateActiveLangBtn();
+          updateKeyButtons();
+        });
+      } else {
+        localStorage.setItem('lang', lang);
+        updateActiveLangBtn();
+      }
+    });
+  });
+
+  updateActiveLangBtn();
+})();
 
 window.addEventListener('keydown', function(e) {
   if (waitingFor) {

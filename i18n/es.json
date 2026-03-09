@@ -16,7 +16,17 @@
       "hide": "Ocultar juego:",
       "menuKey": "Configuración:",
       "pause": "Pausar al perder el foco:",
+      "language": "Idioma:",
+      "export": "Exportar datos",
+      "import": "Importar datos",
+      "pressKey": "Presiona tecla",
       "close": "Cerrar"
+    },
+    "messages": {
+      "dataImportSuccess": "Datos importados con éxito. La página se recargará ahora.",
+      "dataImportFailed": "Error al importar datos",
+      "invalidDataFile": "Archivo de datos inválido.",
+      "exportFailed": "Error en la exportación"
     },
     "popup": {
       "ported": "Slope Plus, portado por lonfro",

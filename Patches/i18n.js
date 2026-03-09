@@ -63,6 +63,12 @@
       url.searchParams.set('lang', newLang);
       history.replaceState(null, '', url);
     };
+    // Expose function to get translated text for use in JavaScript
+    window.t = function(key) {
+      if (!lastBundle) return key;
+      const text = key.split('.').reduce((acc, k) => (acc && acc[k] != null) ? acc[k] : null, lastBundle);
+      return text != null ? text : key;
+    };
   }
 
   if (document.readyState === 'loading') {
