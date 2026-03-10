@@ -23,7 +23,7 @@
   }
 
   async function loadBundle(lang) {
-    const url = `/i18n/${lang}.json`;
+    const url = new URL(`../i18n/${lang}.json`, location.href).href;
     try {
       const res = await fetch(url, { cache: 'force-cache' });
       if (!res.ok) throw new Error(res.statusText);
