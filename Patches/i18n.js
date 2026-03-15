@@ -3,6 +3,7 @@
   const SUPPORTED = ['en','zh-CN','ja','de','es'];
   const DEFAULT_LANG = 'en';
   const HREF = new URL(location.href);
+  const SCRIPT_SRC = (document.currentScript && document.currentScript.src) || new URL('Patches/i18n.js', location.href).href;
   let lastBundle = null;
 
   function pickLang() {
@@ -23,7 +24,8 @@
   }
 
   async function loadBundle(lang) {
-    const url = new URL(`../i18n/${lang}.json`, location.href).href;
+    // Resolve bundles from this script location so subpath deploys (e.g., GitHub Pages) work.
+    const url = new URL(`../i18n/${lang}.json`, SCRIPT_SRC).href;
     try {
       const res = await fetch(url, { cache: 'force-cache' });
       if (!res.ok) throw new Error(res.statusText);
