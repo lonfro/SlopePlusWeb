@@ -1,13 +1,17 @@
 // Version + cache management (root scope)
-// Root cause of earlier issue: registering /PWA/sw.js limited scope to /PWA only.
-// This root /sw.js controls ALL site requests, so version logic will now run.
+// ROOT CAUSE FIX: When hosted at a subpath (e.g. /SlopePlusWeb/ on GitHub Pages),
+// all absolute paths like /index.html resolve to the domain root, not the subpath.
+// We derive BASE from self.location so this SW works at any subpath automatically.
 console.log('[SW] script start');
 
-const VERSION_FILE = '/version.txt';
+// Derive the base path from where this sw.js is served (e.g. '/SlopePlusWeb')
+const BASE = self.location.pathname.replace(/\/sw\.js$/, '');
+const VERSION_FILE = BASE + '/version.txt';
 const CACHE_PREFIX = 'spw-v';
 // List of assets to precache per version. Keep only site/runtime required files (exclude large dev docs like README). 
 // NOTE: version.txt intentionally not cached with assets; it's fetched with no-cache to detect updates.
-const ASSETS = [
+// Asset paths relative to BASE (e.g. '/SlopePlusWeb/index.html')
+const ASSET_PATHS = [
   // Root shell
   '/', // navigation fallback (will map to index.html when matched manually)
   '/index.html',
@@ -71,6 +75,8 @@ const ASSETS = [
   '/PWA/512.png',
   '/PWA/icon.png'
 ];
+// Prepend BASE to every path (handles subpath hosting like GitHub Pages /SlopePlusWeb/)
+const ASSETS = ASSET_PATHS.map(p => BASE + p);
 
 let activeVersion = null;
 let versionChecked = false;
@@ -169,33 +175,40 @@ self.addEventListener('fetch', evt => {
     return;
   }
 
+  // Only handle requests within our BASE scope
+  if (BASE && !url.pathname.startsWith(BASE)) return;
+
   // Navigation requests (page loads / address bar / SPA fallbacks)
-  if (evt.request.mode === 'navigate' || url.pathname === '/' ) {
+  const rootPath = BASE + '/';
+  if (evt.request.mode === 'navigate' || url.pathname === rootPath || url.pathname === BASE) {
     evt.respondWith((async () => {
       // Fire version check in background
       ensureVersion();
       const reqPath = url.pathname;
-      // Determine candidate HTML files in order
+      // Determine candidate HTML files in order (all prefixed with BASE)
       const candidates = [];
-      if (reqPath !== '/' && /\.[a-zA-Z0-9]+$/.test(reqPath) === false) {
+      // Strip BASE prefix to get the relative portion of the path
+      const relPath = reqPath.startsWith(BASE) ? reqPath.slice(BASE.length) || '/' : reqPath;
+      if (relPath !== '/' && /\.[a-zA-Z0-9]+$/.test(relPath) === false) {
         // Path without extension
-        if (reqPath.endsWith('/')) {
-          candidates.push(reqPath + 'index.html');
+        if (relPath.endsWith('/')) {
+          candidates.push(BASE + relPath + 'index.html');
         } else {
-          candidates.push(reqPath + '/index.html');
+          candidates.push(BASE + relPath + '/index.html');
         }
       }
-      if (reqPath.endsWith('/')) {
-        candidates.push(reqPath + 'index.html');
+      if (relPath.endsWith('/')) {
+        candidates.push(BASE + relPath + 'index.html');
       }
       // Direct path (in case it's already index.html or explicit file)
       candidates.push(reqPath);
       // Finally root index.html as app-shell fallback
-      if (!candidates.includes('/index.html')) candidates.push('/index.html');
+      const rootIndex = BASE + '/index.html';
+      if (!candidates.includes(rootIndex)) candidates.push(rootIndex);
 
       // Attempt on-demand fetch & cache of first path-specific index if missing (improves offline after first hit)
       if (activeVersion) {
-        const firstHtml = candidates.find(p => p.endsWith('/index.html') && p !== '/index.html');
+        const firstHtml = candidates.find(p => p.endsWith('/index.html') && p !== rootIndex);
         if (firstHtml) {
           const cache = await caches.open(CACHE_PREFIX + activeVersion);
             const exists = await cache.match(firstHtml);
@@ -265,7 +278,7 @@ self.addEventListener('fetch', evt => {
       if (net.ok) {
         if (!activeVersion) {
           // If version still unknown, we rely on later ensureVersion run to populate caches.
-        } else if (ASSETS.some(a => evt.request.url.endsWith(a))) {
+        } else if (ASSETS.some(a => evt.request.url === a || evt.request.url.endsWith(a.slice(BASE.length || 0)))) {
           const cache = await caches.open(CACHE_PREFIX + activeVersion);
           cache.put(evt.request, net.clone());
         }
