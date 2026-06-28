@@ -12,6 +12,7 @@
   - Fake 404 screen
   - Optional freeze game if unfocused  
 - Mobile support integrated  
+- Import and export entire progress (including replays, game settings, and high scores)  
 
 
 ### Blocked/Want to make your own website?  
