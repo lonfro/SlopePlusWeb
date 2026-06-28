@@ -86,9 +86,9 @@ async function fetchVersion() {
   try {
     const res = await fetch(VERSION_FILE, { cache: 'no-cache' });
     if (!res.ok) throw new Error('Bad status ' + res.status);
-  const v = (await res.text()).trim();
-  console.log('[SW] fetched version.txt ->', v);
-  return v;
+    const v = (await res.text()).trim();
+    console.log('[SW] fetched version.txt ->', v);
+    return v;
   } catch (e) {
     console.warn('[SW] version fetch failed (offline?):', e);
     return null; // unknown -> stay on existing cache
@@ -112,7 +112,25 @@ async function precache(version) {
 
 async function cleanOld(keep) {
   const names = await caches.keys();
-  await Promise.all(names.filter(n => n.startsWith(CACHE_PREFIX) && !n.endsWith(keep)).map(n => caches.delete(n)));
+  await Promise.all(
+    names
+      .filter(n => n.startsWith(CACHE_PREFIX) && n !== CACHE_PREFIX + keep)
+      .map(n => caches.delete(n))
+  );
+}
+
+// FIX 1: Restore activeVersion from existing cache keys so it survives SW restarts.
+// Previously activeVersion was always null on SW wake-up, causing the navigation
+// handler to fall through to a live network fetch — which then hit the offline page
+// if the network was slow or the SW hadn't finished activating.
+async function restoreActiveVersion() {
+  if (activeVersion) return;
+  const names = await caches.keys();
+  const ours = names.filter(n => n.startsWith(CACHE_PREFIX)).sort();
+  if (ours.length) {
+    activeVersion = ours.at(-1).slice(CACHE_PREFIX.length);
+    console.log('[SW] restored activeVersion from cache keys:', activeVersion);
+  }
 }
 
 async function ensureVersion() {
@@ -122,13 +140,16 @@ async function ensureVersion() {
   if (latest == null) return; // offline
   if (!activeVersion) {
     activeVersion = latest;
-    const test = await (await caches.open(CACHE_PREFIX + activeVersion)).match('/index.html');
+    // FIX 2: Check with BASE prefix — previously '/index.html' was checked but
+    // assets are stored as '/SlopePlusWeb/index.html', so test was always falsy
+    // and precache() fired on every SW restart even when cache was populated.
+    const test = await (await caches.open(CACHE_PREFIX + activeVersion)).match(BASE + '/index.html');
     if (!test) await precache(activeVersion);
-  console.log('[SW] initial activeVersion', activeVersion);
+    console.log('[SW] initial activeVersion', activeVersion);
     return;
   }
   if (latest !== activeVersion) {
-  console.log('[SW] version change detected', activeVersion, '->', latest);
+    console.log('[SW] version change detected', activeVersion, '->', latest);
     await precache(latest); // build new first
     await cleanOld(latest);
     activeVersion = latest;
@@ -140,7 +161,7 @@ function notifyClients() {
   if (reloadNotified) return;
   reloadNotified = true;
   self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clients => {
-  clients.forEach(c => c.postMessage({ type: 'VERSION_UPDATE', version: activeVersion }));
+    clients.forEach(c => c.postMessage({ type: 'VERSION_UPDATE', version: activeVersion }));
   });
 }
 
@@ -159,9 +180,12 @@ self.addEventListener('install', evt => {
 self.addEventListener('activate', evt => {
   console.log('[SW] activate event');
   evt.waitUntil((async () => {
+    // FIX 1 (cont): Restore version on activate so cleanOld works correctly
+    // and activeVersion is available immediately for the first fetch events.
+    await restoreActiveVersion();
     if (activeVersion) await cleanOld(activeVersion);
     await self.clients.claim();
-    console.log('[SW] clients claimed');
+    console.log('[SW] clients claimed, activeVersion:', activeVersion);
   })());
 });
 
@@ -171,7 +195,11 @@ self.addEventListener('fetch', evt => {
 
   // Always network for version.txt (ensures it shows in Network panel)
   if (url.pathname === VERSION_FILE) {
-    evt.respondWith(fetch(evt.request, { cache: 'no-cache' }).catch(() => new Response(activeVersion || '', { status: 200 })));
+    evt.respondWith(
+      fetch(evt.request, { cache: 'no-cache' }).catch(
+        () => new Response(activeVersion || '', { status: 200 })
+      )
+    );
     return;
   }
 
@@ -182,8 +210,13 @@ self.addEventListener('fetch', evt => {
   const rootPath = BASE + '/';
   if (evt.request.mode === 'navigate' || url.pathname === rootPath || url.pathname === BASE) {
     evt.respondWith((async () => {
-      // Fire version check in background
-      ensureVersion();
+      // FIX 3: Restore activeVersion from cache keys before doing anything else,
+      // then await ensureVersion() so we don't race against an async version check.
+      // Previously ensureVersion() was fire-and-forget, so activeVersion was still
+      // null when the cache lookup ran, causing a guaranteed miss and offline page.
+      await restoreActiveVersion();
+      await ensureVersion();
+
       const reqPath = url.pathname;
       // Determine candidate HTML files in order (all prefixed with BASE)
       const candidates = [];
@@ -211,18 +244,18 @@ self.addEventListener('fetch', evt => {
         const firstHtml = candidates.find(p => p.endsWith('/index.html') && p !== rootIndex);
         if (firstHtml) {
           const cache = await caches.open(CACHE_PREFIX + activeVersion);
-            const exists = await cache.match(firstHtml);
-            if (!exists) {
-              try {
-                const netResp = await fetch(firstHtml, { cache: 'no-cache' });
-                if (netResp.ok) {
-                  await cache.put(firstHtml, netResp.clone());
-                  console.log('[SW] cached page shell', firstHtml);
-                }
-              } catch (e) {
-                // ignore (likely offline)
+          const exists = await cache.match(firstHtml);
+          if (!exists) {
+            try {
+              const netResp = await fetch(firstHtml, { cache: 'no-cache' });
+              if (netResp.ok) {
+                await cache.put(firstHtml, netResp.clone());
+                console.log('[SW] cached page shell', firstHtml);
               }
+            } catch (e) {
+              // ignore (likely offline)
             }
+          }
         }
       }
 
@@ -233,13 +266,8 @@ self.addEventListener('fetch', evt => {
           const hit = await cache.match(cPath);
           if (hit) return hit;
         }
-      } else {
-        // If version not yet known, prefer fresh network to avoid stale HTML, then fallback to caches
-        try {
-          const net = await fetch(evt.request, { cache: 'no-cache' });
-          if (net && net.ok) return net;
-        } catch(_) { /* offline or blocked */ }
       }
+
       // Search other version caches
       const names = await caches.keys();
       for (const n of names) {
@@ -250,18 +278,23 @@ self.addEventListener('fetch', evt => {
           if (hit) return hit;
         }
       }
+
       // As last resort network (online) or offline fallback page
       try {
         return await fetch(evt.request);
       } catch (e) {
-        return new Response('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Offline</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial,Helvetica,sans-serif;margin:40px;color:#222;text-align:center;}h1{font-size:26px;margin-bottom:10px;}p{opacity:.75;}code{background:#f2f2f2;padding:2px 4px;border-radius:4px;}</style></head><body><h1>Offline</h1><p>The page <code>' + reqPath + '</code> is not cached.</p><p>Try again when you are back online.</p></body></html>', { status: 503, headers: { 'Content-Type': 'text/html' } });
+        return new Response(
+          '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Offline</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial,Helvetica,sans-serif;margin:40px;color:#222;text-align:center;}h1{font-size:26px;margin-bottom:10px;}p{opacity:.75;}code{background:#f2f2f2;padding:2px 4px;border-radius:4px;}</style></head><body><h1>Offline</h1><p>The page <code>' + reqPath + '</code> is not cached.</p><p>Try again when you are back online.</p></body></html>',
+          { status: 503, headers: { 'Content-Type': 'text/html' } }
+        );
       }
     })());
     return;
   }
 
   evt.respondWith((async () => {
-    // Kick off version check asynchronously (don't block response)
+    // Restore + kick off version check asynchronously (don't block response)
+    await restoreActiveVersion();
     ensureVersion();
 
     // Try current active version cache if available
@@ -275,10 +308,8 @@ self.addEventListener('fetch', evt => {
     try {
       const net = await fetch(evt.request);
       // After network succeeds, if we now have an activeVersion and asset is in list, cache it
-      if (net.ok) {
-        if (!activeVersion) {
-          // If version still unknown, we rely on later ensureVersion run to populate caches.
-        } else if (ASSETS.some(a => evt.request.url === a || evt.request.url.endsWith(a.slice(BASE.length || 0)))) {
+      if (net.ok && activeVersion) {
+        if (ASSETS.some(a => evt.request.url === a || evt.request.url.endsWith(a.slice(BASE.length || 0)))) {
           const cache = await caches.open(CACHE_PREFIX + activeVersion);
           cache.put(evt.request, net.clone());
         }
@@ -301,10 +332,10 @@ self.addEventListener('fetch', evt => {
 self.addEventListener('message', evt => {
   if (!evt.data) return;
   if (evt.data.type === 'FORCE_CHECK') {
-  console.log('[SW] FORCE_CHECK received');
+    console.log('[SW] FORCE_CHECK received');
     versionChecked = false;
     ensureVersion();
   } else if (evt.data.type === 'GET_VERSION') {
-    evt.source?.postMessage({ type:'VERSION_INFO', version: activeVersion });
+    evt.source?.postMessage({ type: 'VERSION_INFO', version: activeVersion });
   }
 });
