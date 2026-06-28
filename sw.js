@@ -174,6 +174,7 @@ self.addEventListener('install', evt => {
       await precache(v);
     }
     self.skipWaiting();
+    await navigator.storage.persist();
   })());
 });
 
